@@ -7,7 +7,6 @@ describe('tests on 07-deses-arr.js', () => {
     expect(letters).toBe('ABC');
     expect(numbers).toBe(123);
 
-    expect(letters).toEqual(expect.any(String))
-
+    expect(letters).toEqual(expect.any(String));
   });
 });
