@@ -2,7 +2,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 export const AddCategory = ({ onNewCategory }) => {
-  const [inputValue, setinputValue] = useState();
+  const [inputValue, setinputValue] = useState('');
 
   const onInputChange = (event) => {
     setinputValue(event.target.value);
@@ -22,7 +22,7 @@ export const AddCategory = ({ onNewCategory }) => {
   };
 
   return (
-    <form onSubmit={onSubmitForm}>
+    <form onSubmit={onSubmitForm} aria-label="form">
       <input
         type="text"
         placeholder="Search gifs"
