@@ -1,5 +1,8 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 
+const navLinkClass = 'nav-item nav-link';
+const navLinkActiveClass = `${navLinkClass} active`;
+
 export const Navbar = () => {
   const navigate = useNavigate();
   const onLogout = () => {
@@ -15,23 +18,30 @@ export const Navbar = () => {
       <div className="navbar-collapse">
         <div className="navbar-nav">
           <NavLink
-            className={({ isActive }) => {
-              const myClass = 'nav-item nav-link';
-              return isActive ? `${myClass} active` : myClass;
-            }}
+            className={({ isActive }) =>
+              isActive ? navLinkActiveClass : navLinkClass
+            }
             to="/marvel"
           >
             Marvel
           </NavLink>
 
           <NavLink
-            className={({ isActive }) => {
-              const myClass = 'nav-item nav-link';
-              return isActive ? `${myClass} active` : myClass;
-            }}
+            className={({ isActive }) =>
+              isActive ? navLinkActiveClass : navLinkClass
+            }
             to="/dc"
           >
             DC
+          </NavLink>
+
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? navLinkActiveClass : navLinkClass
+            }
+            to="/search"
+          >
+            Search
           </NavLink>
         </div>
       </div>
