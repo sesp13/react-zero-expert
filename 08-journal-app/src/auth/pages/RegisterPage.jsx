@@ -11,9 +11,11 @@ import {
 import { AuthLayout } from '../layout/AuthLayout';
 import { useForm } from '../../hooks';
 import { useMemo, useState } from 'react';
-import { startCreatingUserWithEmailPassword } from '../../store/auth';
+import {
+  startCreatingUserWithEmailPassword,
+  startGoogleSignIn,
+} from '../../store/auth';
 import { useDispatch, useSelector } from 'react-redux';
-
 
 const formData = {
   email: '',
@@ -52,6 +54,10 @@ export const RegisterPage = () => {
     [status]
   );
 
+  const onGoogleSignIn = () => {
+    dispatch(startGoogleSignIn());
+  };
+
   const onSubmit = (event) => {
     event.preventDefault();
     setFormSubmitted(true);
@@ -66,7 +72,7 @@ export const RegisterPage = () => {
 
   return (
     <AuthLayout title="Register">
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} className="animate__animated animate__fadeIn">
         <Grid container>
           <Grid item xs={12} sx={{ mt: 2 }}>
             <TextField
@@ -78,7 +84,9 @@ export const RegisterPage = () => {
               value={displayName}
               onChange={onInputChange}
               error={!!displayNameValid && formSubmitted}
-              helperText={displayNameValid}
+              helperText={
+                displayNameValid && formSubmitted ? displayNameValid : null
+              }
             />
           </Grid>
           <Grid item xs={12} sx={{ mt: 2 }}>
@@ -91,7 +99,7 @@ export const RegisterPage = () => {
               value={email}
               onChange={onInputChange}
               error={!!emailValid && formSubmitted}
-              helperText={emailValid}
+              helperText={emailValid && formSubmitted ? emailValid : null}
             />
           </Grid>
           <Grid item xs={12} sx={{ mt: 2 }}>
@@ -104,7 +112,7 @@ export const RegisterPage = () => {
               value={password}
               onChange={onInputChange}
               error={!!passwordValid && formSubmitted}
-              helperText={passwordValid}
+              helperText={passwordValid && formSubmitted ? passwordValid : null}
             />
           </Grid>
 
@@ -129,7 +137,7 @@ export const RegisterPage = () => {
               </Button>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Button variant="contained" fullWidth>
+              <Button variant="contained" fullWidth onClick={onGoogleSignIn}>
                 <Google />
                 <Typography sx={{ ml: 1 }}>Google</Typography>
               </Button>

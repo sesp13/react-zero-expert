@@ -1,7 +1,9 @@
+import { async } from '@firebase/util';
 import {
   registerUserWithEmailPassword,
   loginWithEmailAndPassword,
   signInWithGoogle,
+  logoutFirebase,
 } from '../../firebase/providers';
 import { checkingCredentials, login, logout } from './';
 
@@ -75,5 +77,12 @@ export const startLoginWithEmailAndPassword = ({ email, password }) => {
         photoURL,
       })
     );
+  };
+};
+
+export const startLogout = () => {
+  return async (dispatch) => {
+    await logoutFirebase();
+    dispatch(logout());
   };
 };

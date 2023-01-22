@@ -4,6 +4,7 @@ import { Grid, Typography } from '@mui/material';
 export const NothingSelectedView = () => {
   return (
     <Grid
+      className="animate__animated animate__fadeIn animate__faster"
       container
       spacing={0}
       direction="column"
@@ -12,7 +13,7 @@ export const NothingSelectedView = () => {
       sx={{
         minHeight: 'calc(100vh - 110px)',
         backgroundColor: 'primary.main',
-        borderRadius: 3
+        borderRadius: 3,
       }}
     >
       <Grid item xs={12}>
@@ -24,7 +25,9 @@ export const NothingSelectedView = () => {
         />
       </Grid>
       <Grid item xs={12}>
-          <Typography color="white" variant="h5">Select or create an entry</Typography>
+        <Typography color="white" variant="h5">
+          Select or create an entry
+        </Typography>
       </Grid>
     </Grid>
   );
