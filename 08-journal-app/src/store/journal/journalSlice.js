@@ -12,43 +12,67 @@ export const journalSlice = createSlice({
     savingNewNote: (state) => {
       state.isSaving = true;
     },
-    addNewEmptyNote: (state, { payload }) => {
+    addNewEmptyNote: (state, { payload: note }) => {
       // payload is a new note
-      state.notes.push(payload);
+      state.notes.push(note);
       state.isSaving = false;
     },
-    setActiveNote: (state, { payload }) => {
+    setActiveNote: (state, { payload: note }) => {
       // payload is a new note
-      state.active = payload;
+      state.active = note;
     },
-    setNotes: (state, { payload }) => {
-      state.notes = payload;
+    setNotes: (state, { payload: notes }) => {
+      state.notes = notes;
     },
     setSaving: (state) => {
       state.isSaving = true;
-      // Todo show message
+      state.messageSaved = '';
     },
-    updateNote: (state, { payload }) => {
+    updateNote: (state, { payload: note }) => {
       state.isSaving = false;
       state.notes = state.notes.map((note) => {
-        if (note.id == payload.id) {
-          return payload;
+        if (note.id == note.id) {
+          return note;
         } else {
           return note;
         }
-        // Todo show message
       });
+      state.messageSaved = `${note.title} updated succesfully`;
     },
-    deleteNoteById: (state, action) => {},
+    setPhotosToActiveNote: (state, { payload: photoUrls }) => {
+      state.isSaving = false;
+
+      if (state.active != null) {
+        if (state.active.imageUrls) {
+          state.active.imageUrls = [...state.active.imageUrls, ...photoUrls];
+        } else {
+          state.active.imageUrls = photoUrls;
+          console.log(state.active);
+        }
+      }
+    },
+    deleteNoteById: (state, { payload: id }) => {
+      state.isSaving = false;
+      state.active = null;
+      state.notes = state.notes.filter((note) => note.id !== id);
+    },
+    clearNotesLogout: (state) => {
+      state.isSaving = false;
+      state.messageSaved = '';
+      state.notes = [];
+      state.active = null;
+    },
   },
 });
 
 export const {
-  savingNewNote,
   addNewEmptyNote,
+  clearNotesLogout,
+  deleteNoteById,
+  savingNewNote,
   setActiveNote,
   setNotes,
+  setPhotosToActiveNote,
   setSaving,
   updateNote,
-  deleteNoteById,
 } = journalSlice.actions;
