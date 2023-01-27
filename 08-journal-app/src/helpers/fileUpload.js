@@ -3,7 +3,8 @@ const presetName = 'curso-react-journal';
 
 export const fileUpload = async (file) => {
   if (!file) {
-    throw new Error(`Not file attached`);
+    // throw new Error(`Not file attached`);
+    return null;
   }
 
   const cloudUrl = `https://api.cloudinary.com/v1_1/${cloudId}/upload`;
@@ -20,11 +21,12 @@ export const fileUpload = async (file) => {
     if (!response.ok) {
       throw new Error("The image couldn't be uploaded");
     }
-    
+
     const cloudResponse = await response.json();
     return cloudResponse.secure_url;
   } catch (error) {
     console.log(error);
-    throw new Error(error.message);
+    // throw new Error(error.message);
+    return null;
   }
 };
