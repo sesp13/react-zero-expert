@@ -25,4 +25,5 @@ dist-ssr
 *.sw?
 
 # Secret keys
-keys/cloudinary.config.js
+.env
+test.env
