@@ -33,16 +33,19 @@ export const LoginPage = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
+    console.log({ email, password });
     dispatch(startLoginWithEmailAndPassword({ email, password }));
   };
 
   const onGoogleSignIn = () => {
+    console.log('Sign in');
     dispatch(startGoogleSignIn());
   };
 
   return (
     <AuthLayout title="Login">
       <form
+        aria-label='login-form'
         onSubmit={onSubmit}
         className="animate__animated animate__fadeIn animate__faster"
       >
@@ -64,6 +67,9 @@ export const LoginPage = () => {
               type="password"
               placeholder="Your password"
               name="password"
+              inputProps={{
+                'aria-label': 'password-input',
+              }}
               value={password}
               onChange={onInputChange}
               fullWidth
@@ -96,6 +102,7 @@ export const LoginPage = () => {
                 variant="contained"
                 disabled={isAuthenticating}
                 fullWidth
+                aria-label="google-btn"
               >
                 <Google />
                 <Typography sx={{ ml: 1 }}>Google</Typography>
