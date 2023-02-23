@@ -1,13 +1,13 @@
 import { addHours, differenceInSeconds } from 'date-fns';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import Modal from 'react-modal';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import Swal from 'sweetalert2';
 import { es } from 'date-fns/locale';
+import { useUiStore } from '../../hooks';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import 'sweetalert2/dist/sweetalert2.min.css';
-import { useMemo } from 'react';
 
 const customStyles = {
   content: {
@@ -26,8 +26,8 @@ registerLocale('es', es);
 Modal.setAppElement('#root');
 
 export const CalendarModal = () => {
-  const [isOpen, setisOpen] = useState(true);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const { isDateModalOpen, closeDateModal } = useUiStore();
 
   const [formValues, setFormValues] = useState({
     title: 'Santiago',
@@ -71,14 +71,10 @@ export const CalendarModal = () => {
     if (formValues.title.length <= 0) {
       return;
     }
-
-    //TODO
-    // Close modal
-    // errors in screen
   };
 
   const onCloseModal = () => {
-    setisOpen(false);
+    closeDateModal();
   };
 
   return (
@@ -86,7 +82,7 @@ export const CalendarModal = () => {
       className="modal"
       overlayClassName="modal-fondo"
       closeTimeoutMS={200}
-      isOpen={isOpen}
+      isOpen={isDateModalOpen}
       onRequestClose={onCloseModal}
       style={customStyles}
     >
