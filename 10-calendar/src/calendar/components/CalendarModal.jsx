@@ -1,10 +1,10 @@
 import { addHours, differenceInSeconds } from 'date-fns';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import Modal from 'react-modal';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import Swal from 'sweetalert2';
 import { es } from 'date-fns/locale';
-import { useUiStore } from '../../hooks';
+import { useCalendarStore, useUiStore } from '../../hooks';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import 'sweetalert2/dist/sweetalert2.min.css';
@@ -29,9 +29,11 @@ export const CalendarModal = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const { isDateModalOpen, closeDateModal } = useUiStore();
 
+  const { activeEvent, startSavingEvent } = useCalendarStore();
+
   const [formValues, setFormValues] = useState({
-    title: 'Santiago',
-    notes: 'Espinosa',
+    title: '',
+    notes: '',
     start: new Date(),
     end: addHours(new Date(), 2),
   });
@@ -42,6 +44,12 @@ export const CalendarModal = () => {
     }
     return formValues.title.length > 0 ? '' : 'is-invalid';
   }, [formValues.title, formSubmitted]);
+
+  useEffect(() => {
+    if (activeEvent !== null) {
+      setFormValues({ ...activeEvent });
+    }
+  }, [activeEvent]);
 
   const onInputChanged = ({ target }) => {
     setFormValues({
@@ -57,7 +65,7 @@ export const CalendarModal = () => {
     });
   };
 
-  const onSumbit = (event) => {
+  const onSumbit = async (event) => {
     event.preventDefault();
     setFormSubmitted(true);
 
@@ -71,6 +79,10 @@ export const CalendarModal = () => {
     if (formValues.title.length <= 0) {
       return;
     }
+
+    await startSavingEvent(formValues);
+    closeDateModal();
+    setFormSubmitted(false);
   };
 
   const onCloseModal = () => {
