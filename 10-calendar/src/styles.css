@@ -47,3 +47,8 @@
   position: fixed;
   right: 25px;
 }
+
+.fab-danger {
+  right: initial;
+  left: 25px;
+}
