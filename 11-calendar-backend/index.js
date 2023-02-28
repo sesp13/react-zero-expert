@@ -8,6 +8,9 @@ const app = express();
 // Public folder config
 app.use(express.static('public'));
 
+// Read Jsons from the requests.
+app.use(express.json());
+
 // Route configuration
 app.use('/api/auth', require('./routes/authRoutes'));
 
