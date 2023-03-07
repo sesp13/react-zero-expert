@@ -1,5 +1,6 @@
 const express = require('express');
 const { dbConnection } = require('./database/dbConnection');
+const cors = require('cors');
 require('dotenv').config();
 
 const port = process.env.PORT || 3000;
@@ -8,6 +9,9 @@ const app = express();
 
 // DB config
 dbConnection();
+
+// Cors config
+app.use(cors());
 
 // Public folder config
 app.use(express.static('public'));

@@ -6,6 +6,7 @@ const {
   loginUser,
 } = require('../controllers/authController');
 const { fieldValidator } = require('../middlewares/fieldValidator');
+const { validateJWT } = require('../middlewares/validateJwt');
 
 /* BASE PATH /api/auth */
 const router = Router();
@@ -35,6 +36,6 @@ router.post(
   createUser
 );
 
-router.get('/renew', renewToken);
+router.get('/renew', [validateJWT], renewToken);
 
 module.exports = router;
