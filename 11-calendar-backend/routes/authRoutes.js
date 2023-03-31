@@ -4,12 +4,15 @@ const {
   createUser,
   renewToken,
   loginUser,
+  getUsers,
 } = require('../controllers/authController');
 const { fieldValidator } = require('../middlewares/fieldValidator');
 const { validateJWT } = require('../middlewares/validateJwt');
 
 /* BASE PATH /api/auth */
 const router = Router();
+
+router.get('/users', getUsers);
 
 router.post(
   '/',
