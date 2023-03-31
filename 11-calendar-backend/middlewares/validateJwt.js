@@ -24,8 +24,6 @@ const validateJWT = (req = request, res = response, next) => {
       msg: 'Invalid token',
     });
   }
-
-  next();
 };
 
 module.exports = { validateJWT };
