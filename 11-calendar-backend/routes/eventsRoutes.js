@@ -29,8 +29,18 @@ router.post(
   createEvent
 );
 
-router.put('/:id', updateEvent);
+router.put(
+  '/:id',
+  [
+    check('id', 'invalid id').isMongoId(),
+    check('title', 'The title is required').notEmpty(),
+    check('start', 'the start date is required').custom(isDate),
+    check('end', 'the end date is required').custom(isDate),
+    fieldValidator,
+  ],
+  updateEvent
+);
 
-router.put('/:id', deleteEvent);
+router.delete('/:id', deleteEvent);
 
 module.exports = router;
