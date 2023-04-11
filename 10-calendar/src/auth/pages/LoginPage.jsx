@@ -27,7 +27,7 @@ export const LoginPage = () => {
   const {
     loginEmail,
     loginPassword,
-    onInputChange: onLoginInpuChange,
+    onInputChange: onLoginInputChange,
   } = useForm(loginFormFields);
 
   const {
@@ -69,7 +69,7 @@ export const LoginPage = () => {
                 placeholder="Email"
                 name="loginEmail"
                 value={loginEmail}
-                onChange={onLoginInpuChange}
+                onChange={onLoginInputChange}
               />
             </div>
             <div className="form-group mb-2">
@@ -79,7 +79,7 @@ export const LoginPage = () => {
                 placeholder="password"
                 name="loginPassword"
                 value={loginPassword}
-                onChange={onLoginInpuChange}
+                onChange={onLoginInputChange}
               />
             </div>
             <div className="d-grid gap-2">
