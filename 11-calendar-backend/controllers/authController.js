@@ -82,7 +82,7 @@ const loginUser = async (req = request, res = response) => {
 };
 
 const renewToken = async (req = request, res = response) => {
-  const uid = req.uid;
+  const uid = req.id;
   const name = req.name;
   const token = await generateJwt(uid, name);
   return res.json({
