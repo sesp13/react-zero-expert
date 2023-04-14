@@ -9,10 +9,11 @@ import {
   Navbar,
 } from '../';
 import { useEffect, useState } from 'react';
-import { useCalendarStore, useUiStore } from '../../hooks';
+import { useAuthStore, useCalendarStore, useUiStore } from '../../hooks';
 
 export const CalendarPage = () => {
   const { events, setActiveEvent, startLoadingEvents } = useCalendarStore();
+  const { user } = useAuthStore();
   const { openDateModal } = useUiStore();
 
   const [lastView, setLastView] = useState(
@@ -20,9 +21,12 @@ export const CalendarPage = () => {
   );
 
   const eventsStyleGetter = (event, start, end, isSelected) => {
+    const isMyEvent =
+      user.uid === event.user._id || user.uid === event.user.uid;
+
     // console.log({ event, start, end, isSelected });
     const style = {
-      backgroundColor: '#347cf7',
+      backgroundColor: isMyEvent ? '#347cf7' : '#465660',
       borderRadius: '0px',
       opacity: 0.8,
       color: 'white',
