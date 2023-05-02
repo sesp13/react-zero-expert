@@ -7,11 +7,16 @@ export const FabDelete = () => {
     startDeletingEvent();
   };
 
-  return hasEventSelected ? (
-    <button onClick={handleDelete} className="btn btn-danger fab fab-danger">
+  return (
+    <button
+      aria-label="btn-delete"
+      onClick={handleDelete}
+      className="btn btn-danger fab fab-danger"
+      style={{
+        display: hasEventSelected ? '' : 'none',
+      }}
+    >
       <i className="fas fa-trash-alt"></i>
     </button>
-  ) : (
-    <></>
   );
 };

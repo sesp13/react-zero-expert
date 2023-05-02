@@ -130,4 +130,68 @@ describe('Tests on useAuthStore', () => {
 
     spy.mockRestore();
   });
+
+  test('startRegister should  fail the creation', async () => {
+    const mockStore = getMockStore(notAuthenticatedState);
+
+    const { result } = renderHook(() => useAuthStore(), {
+      wrapper: ({ children }) => (
+        <Provider store={mockStore}>{children}</Provider>
+      ),
+    });
+
+    await act(async () => {
+      await result.current.startRegister(testUserCredentials);
+    });
+
+    const { errorMessage, user, status } = result.current;
+    expect({ errorMessage, user, status }).toEqual({
+      errorMessage: expect.any(String),
+      user: {},
+      status: notAuthenticatedState.status,
+    });
+  });
+
+  test('checkAuthToken should fail if there is not token', async () => {
+    const mockStore = getMockStore({ ...initialState });
+    const { result } = renderHook(() => useAuthStore(), {
+      wrapper: ({ children }) => (
+        <Provider store={mockStore}>{children}</Provider>
+      ),
+    });
+
+    await act(async () => {
+      await result.current.checkAuthToken();
+    });
+
+    const { errorMessage, user, status } = result.current;
+    expect({ errorMessage, user, status }).toEqual({
+      errorMessage: undefined,
+      user: {},
+      status: notAuthenticatedState.status,
+    });
+  });
+
+  test('checkAuthToken should authenticate the user if there is a token', async () => {
+    const { data } = await calendarApi.post('/auth', testUserCredentials);
+    localStorage.setItem('token', data.token);
+
+    const mockStore = getMockStore({ ...initialState });
+    const { result } = renderHook(() => useAuthStore(), {
+      wrapper: ({ children }) => (
+        <Provider store={mockStore}>{children}</Provider>
+      ),
+    });
+
+    await act(async () => {
+      await result.current.checkAuthToken();
+    });
+
+    const { errorMessage, user, status } = result.current;
+    expect({ errorMessage, user, status }).toEqual({
+      errorMessage: undefined,
+      user: { name: testUserCredentials.name, uid: expect.any(String) },
+      status: authenticatedState.status,
+    });
+  });
 });

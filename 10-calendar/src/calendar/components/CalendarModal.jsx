@@ -4,10 +4,11 @@ import Modal from 'react-modal';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import Swal from 'sweetalert2';
 import { es } from 'date-fns/locale';
-import { useAuthStore, useCalendarStore, useUiStore } from '../../hooks';
+import { useCalendarStore, useUiStore } from '../../hooks';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import 'sweetalert2/dist/sweetalert2.min.css';
+import { getEnvVariables } from '../../helpers';
 
 const customStyles = {
   content: {
@@ -23,7 +24,10 @@ const customStyles = {
 // for react date picker
 registerLocale('es', es);
 
-Modal.setAppElement('#root');
+
+if(getEnvVariables().VITE_MODE !== 'test') {
+  Modal.setAppElement('#root');
+}
 
 export const CalendarModal = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
